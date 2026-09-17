@@ -2,10 +2,11 @@
 
 **Fitness coaching agent** — resistance training · hypertrophy · nutrition · recovery · adherence · progress.
 
-Vietnamese-first. Source-bounded. Safety-first. **FitCoach-only** (không trả lời ngoài domain).
+Vietnamese-first. Source-bounded. Safety-first. **FitCoach-only**.  
+**P5.3:** Humanizer (giọng coach người thật) + Full Skills Playbook (S1–S17).
 
 > Upstream knowledge: [`Nohfinl99/Fit_Coach-AI_V1`](https://github.com/Nohfinl99/Fit_Coach-AI_V1) (anh Minh)  
-> Bản này: chỉnh cấu trúc + packaging + harden scope để review / deploy Custom GPT.
+> Bản này: restructure + packaging + domain lock + humanizer/skills harden cho Custom GPT.
 
 ---
 
@@ -18,37 +19,61 @@ Vietnamese-first. Source-bounded. Safety-first. **FitCoach-only** (không trả 
 | Dinh dưỡng tổng quát, macro, timing, adherence | Kê thuốc, steroid, rehab protocol |
 | Check-in tiến độ, estimate (range + uncertainty) | Weight-cut / dehydration protocol |
 | Competition peaking **education** + safety gate | Mọi chủ đề không phải Fit Coach |
+| Bảng / checklist / chart-data (Business GPT) | Visual ngoài domain |
 
-Hard gate nằm trong **GPT Instructions** + Master `A3.1`. Agent sau này **không** trả lời partial ngoài Fit Coach.
+Hard gate: **GPT Instructions** + Master `A3.1`. Không partial answer ngoài Fit Coach.
+
+---
+
+## Cải tiến P5.3 (bản này)
+
+| Trục | Trước | Sau |
+|---|---|---|
+| Giọng | Style rules rời, dễ robot | **A12.5 Humanizer** — coach người thật, direct hit, no empty praise |
+| Skills | OA registry chung | **A15 S1–S17** must-have playbook / turn |
+| Plan skill | Dễ thiếu block | Goal · tuần · progression 1 lever · recovery · metric+review |
+| Visual | Không rõ | S14: markdown table + chart/Canvas khi runtime có |
+| Production instr. | Contract ngắn | Full runtime: gate → skill → humanize → self-check |
+| Science | — | **Không rewrite** category knowledge |
+
+Chi tiết lỗi old vs new: [`docs/qa/ERROR_MATRIX.md`](docs/qa/ERROR_MATRIX.md)
 
 ---
 
 ## Deploy Custom GPT (4 bước)
 
-1. Mở GPT Builder → **Configure**
-2. Paste `GPT_UPLOAD_READY/instructions/10-custom-gpt-production-instruction.md` vào **Instructions**
+1. GPT Builder → **Configure**
+2. Paste `GPT_UPLOAD_READY/instructions/10-custom-gpt-production-instruction.md` → **Instructions**
 3. Upload **đúng 19 file** trong `GPT_UPLOAD_READY/knowledge/`
-4. Smoke test: off-topic refuse · high-risk safety · “RIR là gì?” · plan thiếu schedule · supplement + thuốc
+4. Smoke:
+   - Off-topic → refuse
+   - High-risk safety
+   - “RIR là gì?” → humanizer + S1
+   - Xin plan thiếu schedule → 1 Q đắt + mini-framework
+   - “Vẽ bảng so sánh split” → S14
+   - Supplement + đang thuốc → no interaction advice
 
 ```bash
-bash scripts/pack_gpt_upload.sh   # regenerate pack (assert = 19 files)
+bash scripts/pack_gpt_upload.sh   # regenerate pack (assert = 19)
 ```
+
+**Business GPT tip:** bật Advanced Data Analysis nếu muốn chart từ số user; Canvas cho program dài. Web browsing **OFF**.
 
 ---
 
 ## Cấu trúc repo
 
 ```text
-knowledge/                 # runtime authority (hierarchy)
+knowledge/                 # runtime authority
   00-controller/           # 05 master · 02 safety · 13 routing
   training/ nutrition/ measurement/ competition/
-GPT_UPLOAD_READY/          # pack phẳng — chỉ cái này upload
-  instructions/            # paste vào GPT Instructions
+GPT_UPLOAD_READY/          # CHỈ pack này upload
+  instructions/            # paste Instructions (P5.3)
   knowledge/               # đúng 19 file
 docs/
   deployment/              # manifest + production instruction source
-  design/                  # design-only + superseded (03, 11) — KHÔNG upload
-  qa/                      # tests · checkpoints · ERROR_MATRIX
+  design/                  # design-only + superseded — KHÔNG upload
+  qa/                      # tests · ERROR_MATRIX
 scripts/pack_gpt_upload.sh
 ```
 
@@ -56,12 +81,10 @@ scripts/pack_gpt_upload.sh
 
 | Role | Files |
 |---|---|
-| Controller | `05-master-instruction.md` |
+| Controller | `05-master-instruction.md` (A12.5 + A15) |
 | Safety | `02-reasoning-safety-rules.md` |
 | Routing | `13-knowledge-routing-and-behavior.md` |
 | Domain | 16 category files (K01–K16) |
-
-**Không upload:** `docs/**`, superseded `03`/`11`, design architect, pain miner, QA.
 
 ---
 
@@ -69,45 +92,35 @@ scripts/pack_gpt_upload.sh
 
 ```text
 request
-  → Domain Lock (FitCoach-only)     # refuse off-topic
+  → Domain Lock (FitCoach-only)
+  → Safety gate (02) nếu risk
   → 05 master
-  → safety gate (02) nếu risk/scope
   → route tối thiểu (13) → category
-  → verify retrieval · output · self-check
+  → verify retrieval
+  → 1 primary skill (A15)
+  → humanize (A12.5)
+  → self-check → reply
 ```
 
----
+### Skills nhanh (A15)
 
-## Đã sửa so với repo cũ
-
-Chi tiết 18 lỗi: [`docs/qa/ERROR_MATRIX.md`](docs/qa/ERROR_MATRIX.md) · [`error_matrix.json`](docs/qa/error_matrix.json) · [`error_matrix.csv`](docs/qa/error_matrix.csv)
-
-| Trước (flat V1) | Sau (SID) |
-|---|---|
-| 33 file root lẫn design/QA | Hierarchy theo role |
-| README = dump instruction | README deploy-ready |
-| Routing 03+11 cạnh tranh | Gộp `13` · manifest 19 |
-| Phụ thuộc file không upload | Deps runtime = `02`+`13` |
-| Off-topic gate yếu | **Hard FitCoach-only** |
-| Không error ledger | Matrix DB old vs new |
-
-Science/knowledge **không rewrite** — restructure + packaging + scope harden.
+Explain · Compare · Recommend · **Build/Adjust plan** · Troubleshoot · Check-in · Estimate · Execution cues · Adherence · Supplement · Competition edu · Safety · **Visual/artifact** · Clarify · First-turn value · Continuity
 
 ---
 
 ## Owner checklist (anh Minh)
 
-- [ ] Review `GPT_UPLOAD_READY/` (19 + instructions)
-- [ ] Review Domain Lock trong instructions + Master A3.1
-- [ ] Chạy smoke tests ở trên
-- [ ] Đánh dấu KIT runtime trong `docs/qa/12-…` khi live
-- [ ] Không commit/upload raw books / personal exports vào runtime pack
+- [ ] Review `GPT_UPLOAD_READY/` (19 + instructions P5.3)
+- [ ] Paste instructions mới (thay bản cũ trong Builder)
+- [ ] Smoke humanizer + plan must-have + visual + off-topic + safety
+- [ ] KIT runtime khi live (`docs/qa/12-…`)
+- [ ] Không upload `docs/**` / raw books
 
 ---
 
 ## Credit
 
 - **Nội dung / product owner:** anh Minh — [`Nohfinl99/Fit_Coach-AI_V1`](https://github.com/Nohfinl99/Fit_Coach-AI_V1)
-- **Restructure & packaging:** monas-ai mirror for review
+- **Restructure · packaging · P5.3 humanizer/skills:** monas-ai mirror
 
 License theo upstream author trừ khi anh Minh quy định khác.

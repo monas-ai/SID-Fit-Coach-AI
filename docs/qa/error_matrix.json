@@ -7,15 +7,15 @@
   },
   "current": {
     "repo": "monas-ai/SID-Fit-Coach-AI",
-    "note": "restructured hierarchy + FitCoach-only harden + error ledger"
+    "note": "restructured + FitCoach-only + P5.3 humanizer/skills + error ledger"
   },
   "owner": "Minh (upstream author) — review target",
   "packager": "monas-ai",
   "summary": {
-    "fixed": 11,
-    "mitigated": 6,
+    "fixed": 12,
+    "mitigated": 9,
     "open": 1,
-    "total": 18
+    "total": 22
   },
   "errors": [
     {
@@ -26,7 +26,10 @@
       "impact": "Wrong upload / wrong retrieval",
       "fix": "Split knowledge / docs / GPT_UPLOAD_READY",
       "new_status": "fixed",
-      "evidence": ["STRUCTURE.md", "repo tree"]
+      "evidence": [
+        "STRUCTURE.md",
+        "repo tree"
+      ]
     },
     {
       "id": "ERR-02",
@@ -36,7 +39,9 @@
       "impact": "No deploy map for owner",
       "fix": "Modern purpose README with 19-file pack + 4-step deploy",
       "new_status": "fixed",
-      "evidence": ["README.md"]
+      "evidence": [
+        "README.md"
+      ]
     },
     {
       "id": "ERR-03",
@@ -46,7 +51,9 @@
       "impact": "Context bloat, route conflict",
       "fix": "Merged into 13; 03/11 reference-only under docs/design",
       "new_status": "fixed",
-      "evidence": ["knowledge/00-controller/05-master-instruction.md#F"]
+      "evidence": [
+        "knowledge/00-controller/05-master-instruction.md#F"
+      ]
     },
     {
       "id": "ERR-04",
@@ -56,7 +63,10 @@
       "impact": "Extra indexed files",
       "fix": "Canonical 19-file manifest",
       "new_status": "fixed",
-      "evidence": ["docs/deployment/09-custom-gpt-deployment-manifest.md", "scripts/pack_gpt_upload.sh"]
+      "evidence": [
+        "docs/deployment/09-custom-gpt-deployment-manifest.md",
+        "scripts/pack_gpt_upload.sh"
+      ]
     },
     {
       "id": "ERR-05",
@@ -66,7 +76,9 @@
       "impact": "Model invents missing contracts",
       "fix": "Runtime deps only 02 + 13",
       "new_status": "fixed",
-      "evidence": ["P5.1 change note"]
+      "evidence": [
+        "P5.1 change note"
+      ]
     },
     {
       "id": "ERR-06",
@@ -76,7 +88,10 @@
       "impact": "Human copy errors",
       "fix": "GPT_UPLOAD_READY + pack script asserts count==19",
       "new_status": "fixed",
-      "evidence": ["GPT_UPLOAD_READY/", "scripts/pack_gpt_upload.sh"]
+      "evidence": [
+        "GPT_UPLOAD_READY/",
+        "scripts/pack_gpt_upload.sh"
+      ]
     },
     {
       "id": "ERR-07",
@@ -86,7 +101,9 @@
       "impact": "Top churn reason",
       "fix": "A11.1 Session Continuity Protocol",
       "new_status": "mitigated",
-      "evidence": ["Master A11.1"],
+      "evidence": [
+        "Master A11.1"
+      ],
       "needs_runtime_validation": true
     },
     {
@@ -97,7 +114,9 @@
       "impact": "Silent wrong-population advice",
       "fix": "A4.1 Retrieval Verification Gate",
       "new_status": "mitigated",
-      "evidence": ["Master A4.1"],
+      "evidence": [
+        "Master A4.1"
+      ],
       "needs_runtime_validation": true
     },
     {
@@ -108,7 +127,9 @@
       "impact": "Drop-off",
       "fix": "A10.1 First-Turn Value Delivery",
       "new_status": "mitigated",
-      "evidence": ["Master A10.1"],
+      "evidence": [
+        "Master A10.1"
+      ],
       "needs_runtime_validation": true
     },
     {
@@ -117,9 +138,11 @@
       "severity": "Medium",
       "old": "Vague self-check without fail actions",
       "impact": "Bundle Q / KB dump / premature advice",
-      "fix": "A14.1 compact checklist + fail mapping",
+      "fix": "A14.1 checklist + fail mapping (+ P5.3 skill/humanizer checks)",
       "new_status": "mitigated",
-      "evidence": ["Master A14.1"],
+      "evidence": [
+        "Master A14.1"
+      ],
       "needs_runtime_validation": true
     },
     {
@@ -128,9 +151,11 @@
       "severity": "Medium",
       "old": "Missing hook/plain-language/anti-pattern runtime rules",
       "impact": "Robotic or prestige tone",
-      "fix": "A12.1–A12.4 V4 alignment",
+      "fix": "A12.1-A12.4 + A12.5 Humanizer",
       "new_status": "mitigated",
-      "evidence": ["Master A12"],
+      "evidence": [
+        "Master A12"
+      ],
       "needs_runtime_validation": true
     },
     {
@@ -141,7 +166,9 @@
       "impact": "Accidental upload",
       "fix": "Moved to docs/design as SUPERSEDED",
       "new_status": "fixed",
-      "evidence": ["docs/design/"]
+      "evidence": [
+        "docs/design/"
+      ]
     },
     {
       "id": "ERR-13",
@@ -151,7 +178,9 @@
       "impact": "Authority confusion",
       "fix": "docs/design only; never upload",
       "new_status": "fixed",
-      "evidence": ["repo tree"]
+      "evidence": [
+        "repo tree"
+      ]
     },
     {
       "id": "ERR-14",
@@ -174,7 +203,10 @@
       "impact": "Scope or safety override",
       "fix": "Anti-override + off-topic refuse preserved",
       "new_status": "mitigated",
-      "evidence": ["02-reasoning-safety-rules.md", "production instruction"],
+      "evidence": [
+        "02-reasoning-safety-rules.md",
+        "production instruction"
+      ],
       "needs_runtime_validation": true
     },
     {
@@ -185,7 +217,9 @@
       "impact": "No live proof on Custom GPT",
       "fix": "Keep suite; owner must run on Builder",
       "new_status": "open",
-      "evidence": ["docs/qa/12-knowledge-integration-tests.md"]
+      "evidence": [
+        "docs/qa/12-knowledge-integration-tests.md"
+      ]
     },
     {
       "id": "ERR-17",
@@ -195,7 +229,9 @@
       "impact": "Hard to audit old vs new",
       "fix": "ERROR_MATRIX.md + json + csv",
       "new_status": "fixed",
-      "evidence": ["docs/qa/ERROR_MATRIX.md"]
+      "evidence": [
+        "docs/qa/ERROR_MATRIX.md"
+      ]
     },
     {
       "id": "ERR-18",
@@ -205,7 +241,60 @@
       "impact": "Maintainer confusion",
       "fix": "README credits Nohfinl99 content; monas-ai packaging for Minh review",
       "new_status": "fixed",
-      "evidence": ["README.md"]
+      "evidence": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "ERR-19",
+      "layer": "ux",
+      "severity": "High",
+      "old": "Robot voice / empty praise / template openers",
+      "impact": "Feels like form-bot, low trust",
+      "fix": "A12.5 Humanizer + production voice contract + few-shot",
+      "new_status": "mitigated",
+      "evidence": [
+        "Master A12.5",
+        "10-custom-gpt-production-instruction.md P5.3"
+      ]
+    },
+    {
+      "id": "ERR-20",
+      "layer": "skills",
+      "severity": "High",
+      "old": "OA registry without must-have skill playbooks",
+      "impact": "Generic plans, missing blocks, weak check-ins",
+      "fix": "A15 Full Skills S1-S17 must-have/forbid; 1 primary skill/turn",
+      "new_status": "mitigated",
+      "evidence": [
+        "Master A15",
+        "production instruction §3"
+      ]
+    },
+    {
+      "id": "ERR-21",
+      "layer": "skills",
+      "severity": "Medium",
+      "old": "No explicit visual/artifact skill for Business GPT",
+      "impact": "Weak tables/charts or invented numbers",
+      "fix": "S14 table/checklist + chart only from user data + Canvas note",
+      "new_status": "mitigated",
+      "evidence": [
+        "A15 S14",
+        "instr S14"
+      ]
+    },
+    {
+      "id": "ERR-22",
+      "layer": "packaging",
+      "severity": "Medium",
+      "old": "Short production instruction without skill+humanizer runtime surface",
+      "impact": "Builder paste is thin; weak runtime behavior",
+      "fix": "Rewrite 10-custom-gpt-production-instruction.md P5.3 full runtime",
+      "new_status": "fixed",
+      "evidence": [
+        "docs/deployment/10-custom-gpt-production-instruction.md"
+      ]
     }
   ]
 }
