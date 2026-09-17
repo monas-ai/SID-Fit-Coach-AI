@@ -1,5 +1,13 @@
 # Changelog
 
+## P5.4 — Instructions ≤8k chars (2026-09-17)
+
+- Condensed Custom GPT Instructions under OpenAI **8000-character** limit (was ~12.8k chars).
+- Kept HARD domain lock, safety, humanizer core, S1–S17 skill table, self-check.
+- Detail remains in knowledge (`05-master-instruction.md`, category files) — not duplicated in Instructions.
+- Sync: `GPT_UPLOAD_READY/instructions/` + `docs/deployment/`.
+
+
 ## 2026-09-17 — P5.3 Humanizer + Full Skills
 
 - Production instruction rewrite: gate → skill → humanize → self-check

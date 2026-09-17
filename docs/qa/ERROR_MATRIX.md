@@ -47,6 +47,7 @@ Machine-readable: [`error_matrix.json`](./error_matrix.json) · [`error_matrix.c
 | ERR-20 | skills | High | OA registry không có must-have playbook → plan/check-in lệch xương | Output thiếu block, generic coach | **A15 Full Skills S1–S17** must-have/cấm; 1 primary skill/turn | **mitigated** | Master A15 · instr §3 |
 | ERR-21 | skills | Medium | Không skill visual/artifact rõ cho Business GPT | Bảng/chart yếu hoặc bịa số | **S14** table/checklist + chart only from user data + Canvas note | **mitigated** | A15 S14 · instr S14 |
 | ERR-22 | packaging | Medium | Production instruction ngắn, thiếu skill+humanizer runtime surface | Builder chỉ dán contract loãng | Rewrite `10-…production-instruction.md` P5.3 full runtime | **fixed** | docs/deployment/10 |
+| ERR-23 | Instructions field > OpenAI 8k-char limit (~12.8k) | GPT Configure reject / truncate | Condensed runtime contract ≤8k chars (P5.4); detail in knowledge | **fixed** |
 
 ---
 
