@@ -1,89 +1,29 @@
-# STRUCTURE — SID Fit Coach AI (restructured)
+# STRUCTURE — SID Fit Coach AI
 
-## 1. Mục tiêu cấu trúc
+## Rules
 
-1. **Một chỗ duy nhất cho runtime authority** (`knowledge/`)
-2. **Một pack phẳng sẵn upload** (`GPT_UPLOAD_READY/`) — Custom GPT cần flat filenames
-3. **Design / QA / deployment tách hẳn** — không lẫn vào knowledge upload
-4. **Giữ nguyên filename gốc** của 19 runtime files (manifest & router phụ thuộc tên file)
+1. Runtime authority chỉ trong `knowledge/**`
+2. Upload Custom GPT chỉ từ `GPT_UPLOAD_READY/` (flat, đúng 19 file)
+3. `docs/design|qa|deployment` **không** upload
+4. Giữ filename 19 runtime files (router + manifest phụ thuộc tên)
+5. Sửa science → sửa `knowledge/**` → chạy `scripts/pack_gpt_upload.sh`
 
-## 2. Map file → thư mục
+## Map
 
-### Controller (`knowledge/00-controller/`)
-
-| File | Runtime role |
+| Path | Role |
 |---|---|
-| `05-master-instruction.md` | Tier 0 controller |
-| `02-reasoning-safety-rules.md` | Safety / scope / epistemic |
-| `13-knowledge-routing-and-behavior.md` | BK/KN/KR + K01–K16 |
+| `knowledge/00-controller/` | `05` master · `02` safety · `13` routing |
+| `knowledge/training/` | K01 K02 K04–K08 |
+| `knowledge/measurement/` | K03 |
+| `knowledge/nutrition/` | K09–K13 K16 |
+| `knowledge/competition/` | K14 K15 |
+| `GPT_UPLOAD_READY/instructions/` | Paste GPT Instructions (FitCoach-only hard gate) |
+| `GPT_UPLOAD_READY/knowledge/` | 19 flat files |
+| `docs/design/` | design-only + **SUPERSEDED** `03` `11` |
+| `docs/qa/` | tests · checkpoints · **ERROR_MATRIX** |
+| `docs/deployment/` | manifest · production instruction source |
 
-### Training (`knowledge/training/`)
+## Superseded (reference only)
 
-| File | K |
-|---|---|
-| `physiological-basis-of-hypertrophy.md` | K01 |
-| `mechanisms-of-hypertrophy.md` | K02 |
-| `resistance-training-variables.md` | K04 |
-| `advanced-training-practices.md` | K05 |
-| `aerobic-and-concurrent-training.md` | K06 |
-| `individual-modifiers-of-hypertrophy.md` | K07 |
-| `hypertrophy-program-design.md` | K08 |
-
-### Measurement (`knowledge/measurement/`)
-
-| File | K |
-|---|---|
-| `measurement-and-progress-assessment.md` | K03 |
-
-### Nutrition (`knowledge/nutrition/`)
-
-| File | K |
-|---|---|
-| `energy-balance-and-bodyweight-direction.md` | K09 |
-| `macronutrients-and-fiber.md` | K10 |
-| `micronutrients-and-hydration.md` | K11 |
-| `nutrient-timing-and-frequency.md` | K12 |
-| `supplementation.md` | K13 |
-| `nutrition-behavior-adherence-and-lifestyle.md` | K16 |
-
-### Competition (`knowledge/competition/`)
-
-| File | K |
-|---|---|
-| `competition-peaking-and-weight-making.md` | K14 |
-| `post-competition-recovery-and-nutrition-periodization.md` | K15 |
-
-### Design reference only (`docs/design/`)
-
-- `01-output-architecture.md`
-- `04-conversation-state-workflow.md`
-- `06-runtime-prompt-stack.md`
-- `design-conversation-architect.md`
-- `pain_point_difference_miner.md`
-- `03-knowledge-behavior-map.md` ← **SUPERSEDED** by `13`
-- `11-knowledge-runtime-crosswalk.md` ← **SUPERSEDED** by `13`
-
-### QA (`docs/qa/`)
-
-- `07-scenario-tests.md`
-- `12-knowledge-integration-tests.md`
-- `CHECKPOINTS.md`
-
-### Deployment (`docs/deployment/`)
-
-- `08-knowledge-deployment-integration.md`
-- `09-custom-gpt-deployment-manifest.md`
-- `10-custom-gpt-production-instruction.md`
-
-## 3. GPT_UPLOAD_READY contract
-
-- `instructions/10-custom-gpt-production-instruction.md` → paste vào GPT **Instructions** (không upload Knowledge)
-- `knowledge/*` → **đúng 19 file**, filename khớp manifest §3
-- Không include `03` / `11` / design / qa
-
-## 4. Quy tắc maintain
-
-1. Sửa science/runtime → sửa trong `knowledge/**` trước
-2. Chạy `scripts/pack_gpt_upload.sh` để sync pack phẳng
-3. Không đổi tên 19 runtime files trừ khi cập nhật đồng bộ: router `13` + manifest `09` + tests `12`
-4. File superseded giữ trong `docs/design` làm audit trail — không xóa lịch sử
+- `03-knowledge-behavior-map.md` → merged into `13`
+- `11-knowledge-runtime-crosswalk.md` → merged into `13`

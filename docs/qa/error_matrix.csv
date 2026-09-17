@@ -1,0 +1,19 @@
+id,layer,severity,old_error,impact,fix,new_status,needs_runtime_validation,evidence
+ERR-01,structure,High,33 flat root files mix controller/design/QA/superseded,Wrong upload/retrieval,Split knowledge/docs/GPT_UPLOAD_READY,fixed,false,STRUCTURE.md
+ERR-02,packaging,Critical,README is raw GPT instruction dump,No deploy map,Modern purpose README + 19-file pack,fixed,false,README.md
+ERR-03,routing,High,Parallel 03+11 retrieval competition,Context bloat/route conflict,Merged into 13; 03/11 reference-only,fixed,false,Master P5.1
+ERR-04,packaging,High,20-file manifest dual routing,Extra indexed files,Canonical 19-file manifest,fixed,false,manifest+pack script
+ERR-05,routing,High,Master depends on non-uploaded 01/04,Model invents contracts,Runtime deps only 02+13,fixed,false,P5.1
+ERR-06,packaging,High,No flat upload pack/assert,Human copy errors,GPT_UPLOAD_READY + count==19 assert,fixed,false,pack script
+ERR-07,continuity,High,No session start/end protocol; fake memory,Top churn,A11.1 Session Continuity,mitigated,true,Master A11.1
+ERR-08,retrieval,Critical,No post-retrieval verification,Silent wrong advice,A4.1 Retrieval Verification Gate,mitigated,true,Master A4.1
+ERR-09,ux,High,First-turn clarify-heavy,Drop-off,A10.1 First-Turn Value,mitigated,true,Master A10.1
+ERR-10,ux,Medium,Vague self-check no fail-action,Bundle/dump/premature advice,A14.1 checklist,mitigated,true,Master A14.1
+ERR-11,ux,Medium,Missing hook/plain-language/anti-pattern,Robotic tone,A12.1-A12.4,mitigated,true,Master A12
+ERR-12,docs,Medium,Superseded 03/11 beside authority,Accidental upload,docs/design SUPERSEDED,fixed,false,docs/design
+ERR-13,docs,Medium,Design-only mixed with runtime,Authority confusion,docs/design never upload,fixed,false,tree
+ERR-14,scope,Critical,Weak off-topic gate,Answers non-FitCoach,Hard FitCoach-only domain gate,fixed,false,instruction+A3.1
+ERR-15,safety,High,Instruction-attack bypass pressure,Scope/safety override,Anti-override + refuse off-topic,mitigated,true,02+instruction
+ERR-16,qa,Medium,KIT tests mostly NOT_RUN,No live proof,Keep suite; owner run on Builder,open,true,docs/qa/12
+ERR-17,packaging,Low,No owner error ledger,Hard audit,ERROR_MATRIX md/json/csv,fixed,false,docs/qa
+ERR-18,identity,Medium,Upstream credit unclear,Maintainer confusion,README credit Nohfinl99 + monas-ai pack,fixed,false,README.md

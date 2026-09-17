@@ -1,0 +1,211 @@
+{
+  "schema": "sid-fit-coach/error-matrix/v1",
+  "generated_at": "2026-09-17",
+  "upstream": {
+    "repo": "Nohfinl99/Fit_Coach-AI_V1",
+    "note": "flat 33-file root pack"
+  },
+  "current": {
+    "repo": "monas-ai/SID-Fit-Coach-AI",
+    "note": "restructured hierarchy + FitCoach-only harden + error ledger"
+  },
+  "owner": "Minh (upstream author) — review target",
+  "packager": "monas-ai",
+  "summary": {
+    "fixed": 11,
+    "mitigated": 6,
+    "open": 1,
+    "total": 18
+  },
+  "errors": [
+    {
+      "id": "ERR-01",
+      "layer": "structure",
+      "severity": "High",
+      "old": "33 flat root files mix controller, design, QA, superseded",
+      "impact": "Wrong upload / wrong retrieval",
+      "fix": "Split knowledge / docs / GPT_UPLOAD_READY",
+      "new_status": "fixed",
+      "evidence": ["STRUCTURE.md", "repo tree"]
+    },
+    {
+      "id": "ERR-02",
+      "layer": "packaging",
+      "severity": "Critical",
+      "old": "README is raw GPT instruction dump",
+      "impact": "No deploy map for owner",
+      "fix": "Modern purpose README with 19-file pack + 4-step deploy",
+      "new_status": "fixed",
+      "evidence": ["README.md"]
+    },
+    {
+      "id": "ERR-03",
+      "layer": "routing",
+      "severity": "High",
+      "old": "Parallel deploy of 03 + 11 competes in retrieval",
+      "impact": "Context bloat, route conflict",
+      "fix": "Merged into 13; 03/11 reference-only under docs/design",
+      "new_status": "fixed",
+      "evidence": ["knowledge/00-controller/05-master-instruction.md#F"]
+    },
+    {
+      "id": "ERR-04",
+      "layer": "packaging",
+      "severity": "High",
+      "old": "20-file manifest with dual routing files",
+      "impact": "Extra indexed files",
+      "fix": "Canonical 19-file manifest",
+      "new_status": "fixed",
+      "evidence": ["docs/deployment/09-custom-gpt-deployment-manifest.md", "scripts/pack_gpt_upload.sh"]
+    },
+    {
+      "id": "ERR-05",
+      "layer": "routing",
+      "severity": "High",
+      "old": "Master depends on 01/04 which are not uploaded",
+      "impact": "Model invents missing contracts",
+      "fix": "Runtime deps only 02 + 13",
+      "new_status": "fixed",
+      "evidence": ["P5.1 change note"]
+    },
+    {
+      "id": "ERR-06",
+      "layer": "packaging",
+      "severity": "High",
+      "old": "No flat upload pack / no pack assert",
+      "impact": "Human copy errors",
+      "fix": "GPT_UPLOAD_READY + pack script asserts count==19",
+      "new_status": "fixed",
+      "evidence": ["GPT_UPLOAD_READY/", "scripts/pack_gpt_upload.sh"]
+    },
+    {
+      "id": "ERR-07",
+      "layer": "continuity",
+      "severity": "High",
+      "old": "No session start/end protocol; fake memory risk",
+      "impact": "Top churn reason",
+      "fix": "A11.1 Session Continuity Protocol",
+      "new_status": "mitigated",
+      "evidence": ["Master A11.1"],
+      "needs_runtime_validation": true
+    },
+    {
+      "id": "ERR-08",
+      "layer": "retrieval",
+      "severity": "Critical",
+      "old": "No post-retrieval verification gate",
+      "impact": "Silent wrong-population advice",
+      "fix": "A4.1 Retrieval Verification Gate",
+      "new_status": "mitigated",
+      "evidence": ["Master A4.1"],
+      "needs_runtime_validation": true
+    },
+    {
+      "id": "ERR-09",
+      "layer": "ux",
+      "severity": "High",
+      "old": "First turn clarify-heavy, slow time-to-value",
+      "impact": "Drop-off",
+      "fix": "A10.1 First-Turn Value Delivery",
+      "new_status": "mitigated",
+      "evidence": ["Master A10.1"],
+      "needs_runtime_validation": true
+    },
+    {
+      "id": "ERR-10",
+      "layer": "ux",
+      "severity": "Medium",
+      "old": "Vague self-check without fail actions",
+      "impact": "Bundle Q / KB dump / premature advice",
+      "fix": "A14.1 compact checklist + fail mapping",
+      "new_status": "mitigated",
+      "evidence": ["Master A14.1"],
+      "needs_runtime_validation": true
+    },
+    {
+      "id": "ERR-11",
+      "layer": "ux",
+      "severity": "Medium",
+      "old": "Missing hook/plain-language/anti-pattern runtime rules",
+      "impact": "Robotic or prestige tone",
+      "fix": "A12.1–A12.4 V4 alignment",
+      "new_status": "mitigated",
+      "evidence": ["Master A12"],
+      "needs_runtime_validation": true
+    },
+    {
+      "id": "ERR-12",
+      "layer": "docs",
+      "severity": "Medium",
+      "old": "Superseded 03/11 sit next to authority",
+      "impact": "Accidental upload",
+      "fix": "Moved to docs/design as SUPERSEDED",
+      "new_status": "fixed",
+      "evidence": ["docs/design/"]
+    },
+    {
+      "id": "ERR-13",
+      "layer": "docs",
+      "severity": "Medium",
+      "old": "Design-only artifacts mixed with runtime",
+      "impact": "Authority confusion",
+      "fix": "docs/design only; never upload",
+      "new_status": "fixed",
+      "evidence": ["repo tree"]
+    },
+    {
+      "id": "ERR-14",
+      "layer": "scope",
+      "severity": "Critical",
+      "old": "Weak off-topic gate (mostly medical/professional only)",
+      "impact": "Agent answers non-FitCoach topics",
+      "fix": "Hard FitCoach-only domain gate in production instruction + Master A3.1",
+      "new_status": "fixed",
+      "evidence": [
+        "docs/deployment/10-custom-gpt-production-instruction.md",
+        "knowledge/00-controller/05-master-instruction.md A3.1"
+      ]
+    },
+    {
+      "id": "ERR-15",
+      "layer": "safety",
+      "severity": "High",
+      "old": "Instruction-attack / bypass-rules pressure",
+      "impact": "Scope or safety override",
+      "fix": "Anti-override + off-topic refuse preserved",
+      "new_status": "mitigated",
+      "evidence": ["02-reasoning-safety-rules.md", "production instruction"],
+      "needs_runtime_validation": true
+    },
+    {
+      "id": "ERR-16",
+      "layer": "qa",
+      "severity": "Medium",
+      "old": "Most KIT tests NOT_RUN / platform blocked",
+      "impact": "No live proof on Custom GPT",
+      "fix": "Keep suite; owner must run on Builder",
+      "new_status": "open",
+      "evidence": ["docs/qa/12-knowledge-integration-tests.md"]
+    },
+    {
+      "id": "ERR-17",
+      "layer": "packaging",
+      "severity": "Low",
+      "old": "No owner-facing error ledger",
+      "impact": "Hard to audit old vs new",
+      "fix": "ERROR_MATRIX.md + json + csv",
+      "new_status": "fixed",
+      "evidence": ["docs/qa/ERROR_MATRIX.md"]
+    },
+    {
+      "id": "ERR-18",
+      "layer": "identity",
+      "severity": "Medium",
+      "old": "Upstream credit unclear on mirror",
+      "impact": "Maintainer confusion",
+      "fix": "README credits Nohfinl99 content; monas-ai packaging for Minh review",
+      "new_status": "fixed",
+      "evidence": ["README.md"]
+    }
+  ]
+}
